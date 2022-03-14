@@ -1,0 +1,25 @@
+# Registered student-service and subject-service on port 8080. 
+# Route is the basic building block of the gateway. It consists of ID, destination URI and Collection of @predicates and a collection of @filters
+# A Route is matched if the aggregate’s predicate is true.
+# Predicate: It is similar to Java 8 Function Predicate. Using this functionality we can match HTTP request, such as headers , url, cookies or parameters.
+# Filter: These are instances of Spring Framework GatewayFilter. Using this we can modify the request or response as per the requirement.
+
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: studentModule
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/student/**
+        filters:
+        - CustomFilter
+      - id: subjectModule
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/subject/**
+        filters:
+        - CustomFilter
